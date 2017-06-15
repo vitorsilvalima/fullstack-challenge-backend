@@ -48,7 +48,7 @@ describe('Clients', () => {
             .post('/api/employees')
             .send(employeeDocumentReject)
             .end((err, res) => {
-                res.should.have.status(500);
+                res.should.have.status(400);
                 //res.body.should.be.a('object');
                 done();
             });
