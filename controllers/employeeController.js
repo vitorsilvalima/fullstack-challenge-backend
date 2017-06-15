@@ -25,10 +25,19 @@ exports.postEmployee = (req, resp, next)=>{
 }
 
 exports.getEmployees = (req, resp, next)=>{
-    
-    employeeModel.find({}).then(employees =>{
+    employeeModel.find({})
+    .then(employees =>{
+        const totalParticipation = employees.reduce((total, ep)=>{
+            return total + ep.participation || 0;
+        }, 0);
+        const percent = 100.0 / totalParticipation;
+        
+        //calcula a porcentagem de cada empregado
+        employees = employees.map(employee => Object.assign({},employee.toJSON(),{participation: employee.participation * percent}));
+
         resp.status(200)
         .json(employees);
+
     }).catch(error => {
         next(error);
     });
