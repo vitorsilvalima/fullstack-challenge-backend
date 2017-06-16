@@ -31,8 +31,19 @@ describe('Clients', () => {
            done();
         });
     })
+    describe('/GET Employees', () => {
+        it('it should get all employees registed', (done) => {
+            chai.request(server)
+            .get('/api/employees')
+            .end((err, res) => {
+                res.should.have.status(200);
+                res.body.should.be.a('array');
+                done();
+            });
+        });
+    })
 
-    describe('/POST registering a new employee', () => {
+    describe('/POST Employees', () => {
         it('it should register one employeed', (done) => {
             chai.request(server)
             .post('/api/employees')
